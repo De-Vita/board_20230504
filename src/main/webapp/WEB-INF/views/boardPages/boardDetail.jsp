@@ -46,11 +46,28 @@
             <th>contents</th>
             <td>${board.boardContents}</td>
         </tr>
+        <c:if test="${board.fileAttached == 1}">
+            <tr>
+                <th>image</th>
+                <td>
+                    <c:forEach items="${boardFileList}" var="boardFile">
+                        <img src="${pageContext.request.contextPath}/upload/${boardFile.storedFileName}"
+                             alt="" width="150" height="150">
+                    </c:forEach>
+
+                </td>
+            </tr>
+        </c:if>
     </table>
     <button onclick="board_list()">목록</button>
     <button onclick="board_update()">수정</button>
     <button onclick="board_delete()">삭제</button>
 </div>
+<form action="/comment/save" method="post">
+    <input type="text" placeholder="제목">
+    <input type="text" placeholder="내용">
+    <input type="button" value="작성" onclick="commentWrite()">
+</form>
 <%@include file="../component/footer.jsp" %>
 </body>
 <script>
@@ -64,6 +81,9 @@
     const board_delete = () => {
         const id = '${board.id}';
         location.href = "/board/delete-check?id=" + id;
+    }
+    const commentWrite = () => {
+
     }
 </script>
 </html>
